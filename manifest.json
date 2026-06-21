@@ -1,0 +1,45 @@
+{
+  "manifest_version": 3,
+  "name": "Prompt Clip",
+  "version": "0.1.0",
+  "description": "Turn selected text into ready-to-paste AI prompts with one click. Wraps snippets in contextual markdown templates for ChatGPT, Claude, and Gemini.",
+  "permissions": [
+    "contextMenus",
+    "scripting",
+    "storage",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "commands": {
+    "trigger-prompt-clip": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+P",
+        "mac": "Command+Shift+P"
+      },
+      "description": "Send selected text to AI using last-used template"
+    }
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_title": "Prompt Clip",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}

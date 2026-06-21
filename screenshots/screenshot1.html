@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prompt Clip — Screenshot Mockup</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #0f0f1a;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    padding: 40px;
+  }
+  .browser-chrome {
+    width: 860px;
+    background: #1a1a2e;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 25px 60px rgba(0,0,0,0.6);
+  }
+  .browser-bar {
+    background: #16161e;
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .browser-dots { display: flex; gap: 6px; }
+  .browser-dots span { width: 12px; height: 12px; border-radius: 50%; }
+  .dot-red { background: #ff5f57; }
+  .dot-yellow { background: #febc2e; }
+  .dot-green { background: #28c840; }
+  .browser-url {
+    flex: 1;
+    background: #0f0f1a;
+    border-radius: 8px;
+    padding: 6px 14px;
+    color: #8888a0;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .ext-icon {
+    width: 20px; height: 20px;
+    background: linear-gradient(135deg, #8b5cf6, #ec4899);
+    border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; color: white; font-weight: bold;
+  }
+  .page-bg {
+    background: #ffffff;
+    padding: 24px 36px;
+    position: relative;
+    min-height: 320px;
+  }
+  .page-bg h1 { color: #1a1a2e; font-size: 20px; margin-bottom: 8px; }
+  .page-bg p { color: #555; font-size: 13px; line-height: 1.7; }
+  .page-bg .selected-text {
+    background: #fef08a;
+    padding: 2px 4px;
+    border-radius: 3px;
+  }
+  /* Context Menu */
+  .context-menu {
+    position: absolute;
+    top: 120px;
+    left: 300px;
+    width: 220px;
+    background: #1e1e2e;
+    border-radius: 10px;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.08);
+    padding: 6px 0;
+    z-index: 100;
+    animation: menuIn 0.15s ease-out;
+  }
+  @keyframes menuIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  .menu-item {
+    padding: 8px 16px;
+    font-size: 12px;
+    color: #e4e4e7;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    transition: background 0.1s;
+  }
+  .menu-item:hover { background: #2a2a3c; }
+  .menu-item .menu-icon { font-size: 14px; width: 18px; text-align: center; }
+  .menu-item .menu-label { flex: 1; }
+  .menu-item .menu-shortcut { font-size: 10px; color: #666; }
+  .menu-item .arrow { font-size: 10px; color: #666; }
+  .menu-divider { height: 1px; background: #2a2a3c; margin: 4px 0; }
+  .menu-header {
+    padding: 6px 16px;
+    font-size: 10px;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+  }
+  .submenu {
+    position: absolute;
+    left: 210px;
+    top: 40px;
+    width: 200px;
+    background: #1e1e2e;
+    border-radius: 10px;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.08);
+    padding: 6px 0;
+  }
+  /* Extension Popup */
+  .ext-popup {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 380px;
+    background: #1e1e2e;
+    border-radius: 12px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.08);
+    overflow: hidden;
+    animation: popIn 0.2s ease-out;
+  }
+  @keyframes popIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  .popup-header {
+    background: linear-gradient(135deg, #8b5cf6, #ec4899);
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .popup-header .icon {
+    width: 26px; height: 26px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px;
+  }
+  .popup-header .title {
+    color: white;
+    font-size: 14px;
+    font-weight: 700;
+    flex: 1;
+  }
+  .popup-body { padding: 14px 16px; }
+  .selected-preview {
+    background: #16161e;
+    border-radius: 8px;
+    padding: 10px 12px;
+    margin-bottom: 12px;
+    border: 1px solid #2a2a3c;
+  }
+  .selected-preview .label {
+    font-size: 10px;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .selected-preview .text {
+    font-size: 12px;
+    color: #e4e4e7;
+    line-height: 1.5;
+    font-style: italic;
+  }
+  .template-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    margin-bottom: 12px;
+  }
+  .template-btn {
+    background: #16161e;
+    border: 1px solid #2a2a3c;
+    border-radius: 8px;
+    padding: 10px;
+    cursor: pointer;
+    transition: all 0.15s;
+    text-align: left;
+  }
+  .template-btn:hover {
+    border-color: #8b5cf6;
+    background: #1a1a2e;
+  }
+  .template-btn .t-icon { font-size: 16px; margin-bottom: 4px; }
+  .template-btn .t-name {
+    font-size: 11px;
+    font-weight: 600;
+    color: #e4e4e7;
+  }
+  .template-btn .t-desc {
+    font-size: 10px;
+    color: #666;
+    margin-top: 2px;
+    line-height: 1.3;
+  }
+  .template-btn.full-width {
+    grid-column: 1 / -1;
+  }
+  .context-info {
+    background: #16161e;
+    border-radius: 8px;
+    padding: 10px 12px;
+    border: 1px solid #2a2a3c;
+  }
+  .context-info .label {
+    font-size: 10px;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .context-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    color: #a1a1aa;
+    margin-bottom: 3px;
+  }
+  .context-row .key { color: #666; }
+  .copy-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    background: #0f0f1a;
+    border-radius: 8px;
+    margin-top: 10px;
+    border: 1px solid #22c55e;
+  }
+  .copy-status .check { color: #22c55e; font-size: 16px; }
+  .copy-status .text { font-size: 12px; color: #22c55e; font-weight: 600; }
+  .copy-status .sub { font-size: 10px; color: #666; }
+</style>
+</head>
+<body>
+<div class="browser-chrome">
+  <div class="browser-bar">
+    <div class="browser-dots">
+      <span class="dot-red"></span>
+      <span class="dot-yellow"></span>
+      <span class="dot-green"></span>
+    </div>
+    <div class="browser-url">
+      <span>🔒</span>
+      <span>openai.com/research/gpt-4</span>
+    </div>
+    <div class="ext-icon">P</div>
+  </div>
+  <div class="page-bg">
+    <h1>GPT-4 Technical Report</h1>
+    <p>We report the development of GPT-4, a large-scale, multimodal model which can accept image and text inputs and produce text outputs. While less capable than humans in many real-world scenarios, GPT-4 exhibits human-level performance on various professional and academic benchmarks.</p>
+    <br>
+    <p><span class="selected-text">GPT-4 exhibits human-level performance on various professional and academic benchmarks, including passing a simulated bar exam with a score around the top 10% of test takers.</span></p>
+
+    <!-- Context Menu -->
+    <div class="context-menu">
+      <div class="menu-header">Prompt Clip</div>
+      <div class="menu-item">
+        <span class="menu-icon">📝</span>
+        <span class="menu-label">Summarize</span>
+        <span class="menu-shortcut">Ctrl+Shift+P</span>
+      </div>
+      <div class="menu-item">
+        <span class="menu-icon">💡</span>
+        <span class="menu-label">Explain</span>
+        <span class="arrow">▶</span>
+      </div>
+      <div class="menu-item">
+        <span class="menu-icon">🌐</span>
+        <span class="menu-label">Translate</span>
+        <span class="arrow">▶</span>
+      </div>
+      <div class="menu-divider"></div>
+      <div class="menu-item">
+        <span class="menu-icon">📋</span>
+        <span class="menu-label">Find Action Items</span>
+      </div>
+      <div class="menu-item">
+        <span class="menu-icon">💻</span>
+        <span class="menu-label">Code Review</span>
+      </div>
+      <div class="menu-divider"></div>
+      <div class="menu-item">
+        <span class="menu-icon">⚙️</span>
+        <span class="menu-label">Options...</span>
+      </div>
+    </div>
+
+    <!-- Extension Popup -->
+    <div class="ext-popup">
+      <div class="popup-header">
+        <div class="icon">✂️</div>
+        <div class="title">Prompt Clip</div>
+      </div>
+      <div class="popup-body">
+        <div class="selected-preview">
+          <div class="label">Selected Text</div>
+          <div class="text">"GPT-4 exhibits human-level performance on various professional and academic benchmarks, including passing a simulated bar exam..."</div>
+        </div>
+        <div class="template-grid">
+          <div class="template-btn">
+            <div class="t-icon">📝</div>
+            <div class="t-name">Summarize</div>
+            <div class="t-desc">Condense into key points</div>
+          </div>
+          <div class="template-btn">
+            <div class="t-icon">💡</div>
+            <div class="t-name">Explain</div>
+            <div class="t-desc">Explain like I'm 5</div>
+          </div>
+          <div class="template-btn">
+            <div class="t-icon">🌐</div>
+            <div class="t-name">Translate</div>
+            <div class="t-desc">To another language</div>
+          </div>
+          <div class="template-btn">
+            <div class="t-icon">📋</div>
+            <div class="t-name">Action Items</div>
+            <div class="t-desc">Extract tasks & todos</div>
+          </div>
+          <div class="template-btn full-width" style="border-color: #8b5cf6; background: rgba(139,92,246,0.1);">
+            <div class="t-icon">💻</div>
+            <div class="t-name">Code Review</div>
+            <div class="t-desc">Analyze code quality, security, and best practices</div>
+          </div>
+        </div>
+        <div class="context-info">
+          <div class="label">Auto-Context</div>
+          <div class="context-row"><span class="key">Page:</span> GPT-4 Technical Report</div>
+          <div class="context-row"><span class="key">URL:</span> openai.com/research/gpt-4</div>
+          <div class="context-row"><span class="key">Date:</span> 2026-06-20</div>
+        </div>
+        <div class="copy-status">
+          <span class="check">✅</span>
+          <div>
+            <div class="text">Copied to clipboard!</div>
+            <div class="sub">Paste into ChatGPT, Claude, or Gemini</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
