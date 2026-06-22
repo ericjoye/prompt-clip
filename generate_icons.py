@@ -58,7 +58,7 @@ def create_png(width, height, color_rgb):
 color = (16, 185, 129)
 for size in [16, 48, 128]:
     png_data = create_png(size, size, color)
-    path = f"/home/ericjoye/businesses/prompt-clip/icons/icon{size}.png"
+    path = f"icons/icon{size}.png"
     with open(path, 'wb') as f:
         f.write(png_data)
     print(f"Created icon{size}.png ({len(png_data)} bytes)")
