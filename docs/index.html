@@ -4,26 +4,34 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Prompt Clip — Turn Text into AI Prompts Instantly</title>
-<meta name="description" content="Select any text in your browser, click Prompt Clip, and get a perfectly formatted prompt for ChatGPT, Claude, or Gemini.">
+<meta name="description" content="Select any text in your browser, right-click, and get a perfectly formatted prompt for ChatGPT, Claude, or Gemini. Free, private, no accounts.">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#0a0a0f;color:#e4e4e7;min-height:100vh}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#0a0a0f;color:#e4e4e7;min-height:100vh;line-height:1.6}
 .nav{max-width:1200px;margin:0 auto;padding:20px 40px;display:flex;justify-content:space-between;align-items:center}
-.logo{font-size:1.4rem;font-weight:700;color:#a78bfa}
+.logo{display:flex;align-items:center;gap:10px;font-size:1.2rem;font-weight:700;color:#a78bfa}
+.logo-icon{width:32px;height:32px;background:linear-gradient(135deg,#7c3aed,#06b6d4);border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;font-size:0.85rem}
 .nav-links a{color:#a1a1aa;text-decoration:none;margin-left:30px;font-size:0.9rem}
 .nav-links a:hover{color:#fff}
-.hero{max-width:800px;margin:80px auto;text-align:center;padding:0 40px}
+.hero{max-width:800px;margin:80px auto 60px;text-align:center;padding:0 40px}
 .hero h1{font-size:3rem;font-weight:800;background:linear-gradient(135deg,#a78bfa,#ec4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:20px}
 .hero p{color:#a1a1aa;font-size:1.2rem;line-height:1.7;margin-bottom:30px}
 .btn{display:inline-block;padding:14px 32px;border-radius:8px;font-size:1rem;font-weight:600;text-decoration:none}
-.btn-primary{background:linear-gradient(135deg,#a78bfa,#ec4899);color:#fff}
-.features{max-width:1000px;margin:80px auto;padding:0 40px;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:30px}
+.btn-primary{background:linear-gradient(135deg,#a78bfa,#ec4899);color:#fff;margin:0 8px 8px 0}
+.btn-secondary{background:#18181b;border:1px solid #27272a;color:#e4e4e7;margin:0 8px 8px 0}
+.btn:hover{opacity:0.9}
+.features{max-width:1000px;margin:60px auto;padding:0 40px;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:30px}
 .card{background:#18181b;border:1px solid #27272a;border-radius:12px;padding:30px}
-.card h3{color:#a78bfa;margin-bottom:10px}
+.card h3{color:#a78bfa;margin-bottom:10px;font-size:1.1rem}
 .card p{color:#a1a1aa;line-height:1.6}
-.install{max-width:600px;margin:80px auto;text-align:center;padding:0 40px}
+.install{max-width:600px;margin:60px auto;text-align:center;padding:0 40px}
 .install h2{font-size:2rem;margin-bottom:20px}
-.install code{background:#18181b;border:1px solid #27272a;border-radius:6px;padding:12px 20px;display:inline-block;color:#a78bfa;font-size:0.95rem}
+.coming-soon{display:inline-block;background:#18181b;border:1px solid #27272a;border-radius:8px;padding:16px 28px;color:#a1a1aa;font-size:0.95rem;margin-top:10px}
+.faq{max-width:700px;margin:60px auto;padding:0 40px}
+.faq h2{font-size:2rem;margin-bottom:30px;text-align:center}
+.faq-item{margin-bottom:24px}
+.faq-item h3{color:#a78bfa;margin-bottom:8px;font-size:1rem}
+.faq-item p{color:#a1a1aa;line-height:1.6}
 .footer{max-width:1200px;margin:80px auto 40px;padding:20px 40px;text-align:center;border-top:1px solid #27272a}
 .footer a{color:#a1a1aa;text-decoration:none;margin:0 15px;font-size:0.85rem}
 .footer a:hover{color:#fff}
@@ -31,67 +39,72 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 </head>
 <body>
 <nav class="nav">
-<div class="logo" style="display:flex;align-items:center;gap:8px">
-<div style="width:28px;height:28px;background:linear-gradient(135deg,#7c3aed,#06b6d4);border-radius:6px;display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;font-size:0.8rem">D</div>
-<span style="font-size:1.1rem;font-weight:700;color:#a78bfa">DevTools</span>
+<div class="logo">
+<div class="logo-icon">PC</div>
+Prompt Clip
 </div>
 <div class="nav-links">
 <a href="#features">Features</a>
-<a href="#install">Install</a>
+<a href="#faq">FAQ</a>
 <a href="https://github.com/ericjoye/prompt-clip">GitHub</a>
 </div>
 </nav>
 <main>
 <section class="hero">
 <h1>Turn Text into AI Prompts Instantly</h1>
-
-    <div style="text-align:center; margin: 20px 0;">
-      <a href="https://buy.polar.sh/bd34dd2a-a3b2-45b4-96eb-d00f01ed25da" 
-         style="display:inline-block; background:#000; color:#fff; padding:12px 32px; 
-                text-decoration:none; border-radius:6px; font-size:18px; font-weight:bold;">
-        Buy — $5.00
-      </a>
-    </div>
-
-<p>Select any text in your browser, click Prompt Clip, and get a perfectly formatted prompt for ChatGPT, Claude, or Gemini.</p>
+<p>Select any text on a webpage, right-click, and Prompt Clip wraps it in a ready-to-paste prompt with source context. Works with ChatGPT, Claude, and Gemini. No accounts, no tracking, no friction.</p>
 <a href="#install" class="btn btn-primary">Install Free</a>
+<a href="https://github.com/ericjoye/prompt-clip" class="btn btn-secondary">View on GitHub</a>
 </section>
+
 <section class="features" id="features">
 <div class="card">
-<h3>One-Click Prompts</h3>
-<p>Select text, click the button, and your prompt is ready. No copy-pasting placeholders or remembering template syntax.</p>
+<h3>5 Built-in Templates</h3>
+<p>Summarize, Explain, Translate, Find Action Items, and Code Review — one click each. Every prompt includes page title, source URL, and date automatically.</p>
 </div>
 <div class="card">
-<h3>Multi-AI Ready</h3>
-<p>Prompts optimized for ChatGPT, Claude, and Gemini. Each prompt is structured for maximum quality responses.</p>
+<h3>Smart Formatting</h3>
+<p>Code snippets get wrapped in code fences. Prose gets blockquotes. Keyboard shortcut (Ctrl+Shift+P) uses your last template instantly.</p>
 </div>
 <div class="card">
-<h3>Custom Templates</h3>
-<p>Create your own templates for recurring tasks: code review, email writing, debugging, documentation, more.</p>
+<h3>100% Private</h3>
+<p>No accounts, no network requests, no data collection. Everything runs locally in your browser. Your text never leaves your machine.</p>
 </div>
 </section>
+
 <section class="install" id="install">
 <h2>Install Prompt Clip</h2>
-<p style="color:#a1a1aa;margin-bottom:20px">Coming soon to Chrome Web Store &amp; PyPI</p>
+<div class="coming-soon">
+Coming soon to the Chrome Web Store.<br>
+Star the <a href="https://github.com/ericjoye/prompt-clip" style="color:#a78bfa">GitHub repo</a> to get notified at launch.
+</div>
+</section>
+
+<section class="faq" id="faq">
+<h2>FAQ</h2>
+<div class="faq-item">
+<h3>Does it work with ChatGPT, Claude, and Gemini?</h3>
+<p>Yes. Prompt Clip copies a formatted prompt to your clipboard — paste it into any AI tool.</p>
+</div>
+<div class="faq-item">
+<h3>Does it collect my data?</h3>
+<p>No. Zero network requests. Everything runs locally. See our <a href="privacy.html" style="color:#a78bfa">privacy policy</a>.</p>
+</div>
+<div class="faq-item">
+<h3>Is it really free?</h3>
+<p>The core extension with 5 templates is free forever. A Pro tier with custom templates is planned.</p>
+</div>
+<div class="faq-item">
+<h3>What if I don't have text selected?</h3>
+<p>The keyboard shortcut gracefully does nothing. Just select text first.</p>
+</div>
 </section>
 </main>
 <footer class="footer">
-<a href="PRIVACY.md">Privacy</a>
-<a href="LICENSE">License</a>
+<a href="privacy.html">Privacy</a>
+<a href="https://github.com/ericjoye/prompt-clip/blob/master/LICENSE">License</a>
 <a href="https://github.com/ericjoye/prompt-clip">GitHub</a>
-<a href="mailto:eric@ericjoye.com">Support</a>
-<span style="margin-left:15px;color:#555;font-size:0.75rem">© 2026 DevTools Portfolio</span>
+<span style="margin-left:15px;color:#555;font-size:0.75rem">© 2026 Eric Joye</span>
 </footer>
-
-    <!-- Buy Section -->
-    <div style="text-align:center; padding:40px 20px; background:#1a1a2e; border-radius:16px; margin:30px auto; max-width:500px;">
-        <h2 style="color:#e2e8f0; margin-bottom:12px;">Get prompt-clip</h2>
-        <p style="color:#94a3b8; margin-bottom:20px;">Support development and get priority updates</p>
-        <a href="https://buy.polar.sh/bd34dd2a-a3b2-45b4-96eb-d00f01ed25da" style="display:inline-block; background:#6366f1; color:#fff; padding:14px 36px; border-radius:8px; text-decoration:none; font-weight:600; font-size:1.1em; transition:background 0.2s;" onmouseover="this.style.background='#4f46e5'" onmouseout="this.style.background='#6366f1'">
-            🛒 Buy Now — $5.00
-        </a>
-        <p style="color:#64748b; font-size:0.85em; margin-top:12px;">One-time purchase • Instant delivery • MIT Licensed</p>
-    </div>
-
 </body>
 </html>
